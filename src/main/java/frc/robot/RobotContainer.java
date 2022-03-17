@@ -28,19 +28,19 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public final XboxController drivController = new XboxController(0);
-  public final XboxController auxController = new XboxController(1);
+  public static XboxController drivController = new XboxController(0);
+  public static XboxController auxController = new XboxController(1);
 
-  public final DriveCommand driveCommand = new DriveCommand();
-  public final IntakeCommand intakeCommand = new IntakeCommand();
-  public final LiftCommand liftCommand = new LiftCommand();
-  public final ShooterCommand shooterCommand = new ShooterCommand();
-  public final AutonomousCommand autonomousCommand = new AutonomousCommand();
+  public final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public final LiftSubsystem liftSubsystem = new LiftSubsystem();
+  public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
-  public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public final static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public final static LiftSubsystem liftSubsystem = new LiftSubsystem();
-  public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
+  private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+  private final LiftCommand liftCommand = new LiftCommand(liftSubsystem);
+  private final ShooterCommand shooterCommand = new ShooterCommand(driveSubsystem, shooterSubsystem);
+  private final AutonomousCommand autonomousCommand = new AutonomousCommand();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

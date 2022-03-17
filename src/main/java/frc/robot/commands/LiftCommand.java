@@ -5,11 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.LiftSubsystem;
 
 public class LiftCommand extends CommandBase {
+  private LiftSubsystem liftSubsystem;
   /** Creates a new LiftCommand. */
-  public LiftCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public LiftCommand(LiftSubsystem m_liftSubsystem) {
+    liftSubsystem = m_liftSubsystem;
+    addRequirements(liftSubsystem);
   }
 
   // Called when the command is initially scheduled.

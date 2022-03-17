@@ -5,32 +5,49 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends CommandBase {
+  private DriveSubsystem driveSubsystem;
+  private ShooterSubsystem shooterSubsystem;
   /** Creates a new ShooterCommand. */
-  public ShooterCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.driveSubsystem, RobotContainer.shooterSubsystem);
+  public ShooterCommand(DriveSubsystem m_driveSubsystem, ShooterSubsystem m_shooterSubsystem) {
+    driveSubsystem = m_driveSubsystem;
+    shooterSubsystem = m_shooterSubsystem;
+    addRequirements(driveSubsystem, shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    driveSubsystem.setBrakeMode(true);
+    shooterSubsystem.spoolShooter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    if (RobotContainer.auxController.getRightTriggerAxis() > 0.75) {
+      if (shooterSubsystem.amountOffTarget() > Constants.shooterDeadband) {
+        driveSubsystem.centerMotion(true);
+      } else if (shooterSubsystem.amountOffTarget() < -Constants.shooterDeadband) {
+        driveSubsystem.centerMotion(false);
+      } else {
+        driveSubsystem.stop();
+        shooterSubsystem.shoot(true);
+      }
+    } else if (RobotContainer.auxController.getLeftTriggerAxis() > 0.75) {
+      shooterSubsystem.shoot(false);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    shooterSubsystem.stop();
   }
 
   // Returns true when the command should end.
