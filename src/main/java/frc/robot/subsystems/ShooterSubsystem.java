@@ -25,7 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private SparkMaxPIDController PID = flywheel.getPIDController();
 
   private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  private  NetworkTableEntry tx = table.getEntry("tx");
+  private NetworkTableEntry tx = table.getEntry("tx");
   private NetworkTableEntry ty = table.getEntry("ty");
   private NetworkTableEntry ta = table.getEntry("ta");
   private NetworkTableEntry ledMode = table.getEntry("ledMode");
@@ -36,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
     flywheel.setInverted(false);
     feed.setInverted(false);
     
-    LimelightSetup();
+    turnLimelightOff();
     PIDSetup();
   }
 
@@ -47,7 +47,7 @@ public class ShooterSubsystem extends SubsystemBase {
     PID.setFF(Constants.flyFF);
   }
 
-  public void LimelightSetup() {
+  public void turnLimelightOff() {
     ledMode.setDouble(3);
     camMode.setDouble(0);
   }
@@ -63,9 +63,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     testHRPM = SmartDashboard.getNumber("High RPM", Constants.highRPM);
     testLRPM = SmartDashboard.getNumber("Low RPM", Constants.lowRPM);
+  }
 
-    //calcHighRPM = *insert area function after testing*
-    //SmartDashboard.putNumber("Calculated RPM", calcHighRPM);
+  public void turnLimelightOn() {
+    ledMode.setDouble(1);
+    camMode.setDouble(1);
   }
 
   public double amountOffTarget() {
@@ -75,12 +77,25 @@ public class ShooterSubsystem extends SubsystemBase {
   public void shoot(boolean high) {
     if (high) {
       PID.setReference(testHRPM, ControlType.kVelocity);
-      //PID.setReference(calcHighRPM, ControlType.kVelocity);
+      //PID.setReference(calcHighRPM(), ControlType.kVelocity);
       feed.set(ControlMode.PercentOutput, Constants.feedSpeed);
     } else {
       PID.setReference(testLRPM, ControlType.kVelocity);
       //PID.setReference(Constants.lowRPM, ControlType.kVelocity);
     }
+  }
+  
+  public double calcHighRPM() {
+    double distance, targetAngleRad, rpm;
+
+    targetAngleRad = (Constants.cameraAngleDeg + y) * (Math.PI/180);
+
+    distance = (Constants.targetHeightInch - Constants.cameraHeightInch) / (Math.tan(targetAngleRad));
+
+    rpm = distance;
+
+    return rpm;
+    
   }
   
   public void spoolShooter() {

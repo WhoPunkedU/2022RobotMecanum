@@ -48,6 +48,9 @@ public final class Constants {
     public static final double shooterDeadband = 0;
     public static final double highRPM = 0;
     public static final double lowRPM = 0;
+    public static final double cameraAngleDeg = 0;
+    public static final double targetHeightInch = 0;
+    public static final double cameraHeightInch = 0; 
 
     public static final double xRateLimit = 0;
     public static final double yRateLimit = 0;

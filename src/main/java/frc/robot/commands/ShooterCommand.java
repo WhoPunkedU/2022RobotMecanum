@@ -24,6 +24,7 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void initialize() {
     driveSubsystem.setBrakeMode(true);
+    shooterSubsystem.turnLimelightOn();
     shooterSubsystem.spoolShooter();
   }
 
@@ -48,6 +49,7 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.stop();
+    shooterSubsystem.turnLimelightOff();
   }
 
   // Returns true when the command should end.
