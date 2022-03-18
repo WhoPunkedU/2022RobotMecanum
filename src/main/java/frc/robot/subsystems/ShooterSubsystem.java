@@ -30,12 +30,12 @@ public class ShooterSubsystem extends SubsystemBase {
   private NetworkTableEntry ta = table.getEntry("ta");
   private NetworkTableEntry ledMode = table.getEntry("ledMode");
   private NetworkTableEntry camMode = table.getEntry("camMode");
-  private double x, y, area, testHRPM, testLRPM/*, calcHighRPM*/;
-  
+  private double x, y, area, testHRPM, testLRPM/* , calcHighRPM */;
+
   public void shooterInit() {
     flywheel.setInverted(false);
     feed.setInverted(false);
-    
+
     turnLimelightOff();
     PIDSetup();
   }
@@ -77,31 +77,31 @@ public class ShooterSubsystem extends SubsystemBase {
   public void shoot(boolean high) {
     if (high) {
       PID.setReference(testHRPM, ControlType.kVelocity);
-      //PID.setReference(calcHighRPM(), ControlType.kVelocity);
+      // PID.setReference(calcHighRPM(), ControlType.kVelocity);
       feed.set(ControlMode.PercentOutput, Constants.feedSpeed);
     } else {
       PID.setReference(testLRPM, ControlType.kVelocity);
-      //PID.setReference(Constants.lowRPM, ControlType.kVelocity);
+      // PID.setReference(Constants.lowRPM, ControlType.kVelocity);
     }
   }
-  
+
   public double calcHighRPM() {
     double distance, targetAngleRad, rpm;
 
-    targetAngleRad = (Constants.cameraAngleDeg + y) * (Math.PI/180);
+    targetAngleRad = (Constants.cameraAngleDeg + y) * (Math.PI / 180);
 
     distance = (Constants.targetHeightInch - Constants.cameraHeightInch) / (Math.tan(targetAngleRad));
 
     rpm = distance;
 
     return rpm;
-    
+
   }
-  
+
   public void spoolShooter() {
     PID.setReference(testLRPM, ControlType.kVelocity);
-    //PID.setReference(Constants.lowRPM, ControlType.kVelocity);
-    //PID.setReference(Constants.spoolRPM, ControlType.kVelocity);
+    // PID.setReference(Constants.lowRPM, ControlType.kVelocity);
+    // PID.setReference(Constants.spoolRPM, ControlType.kVelocity);
   }
 
   public void stop() {

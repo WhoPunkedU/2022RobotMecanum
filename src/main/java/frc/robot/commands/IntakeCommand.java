@@ -10,6 +10,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase {
   private IntakeSubsystem intakeSubsystem;
+
   /** Creates a new IntakeCommand. */
   public IntakeCommand(IntakeSubsystem m_intakeSubsystem) {
     intakeSubsystem = m_intakeSubsystem;
@@ -30,7 +31,8 @@ public class IntakeCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

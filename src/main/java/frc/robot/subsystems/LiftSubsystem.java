@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LiftSubsystem extends SubsystemBase {
   /** Creates a new LiftCommand. */
-  public LiftSubsystem() {}
+  public LiftSubsystem() {
+  }
 
   @Override
   public void periodic() {

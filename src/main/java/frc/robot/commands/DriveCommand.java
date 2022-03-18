@@ -10,6 +10,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCommand extends CommandBase {
   private DriveSubsystem driveSubsystem;
+
   /** Creates a new DriveCommand. */
   public DriveCommand(DriveSubsystem m_driveSubsystem) {
     driveSubsystem = m_driveSubsystem;
@@ -26,8 +27,8 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     driveSubsystem.mecanumDriveJoystick(RobotContainer.drivController.getLeftY(),
-                                        RobotContainer.drivController.getLeftX(), 
-                                        RobotContainer.drivController.getRightX());
+        RobotContainer.drivController.getLeftX(),
+        RobotContainer.drivController.getRightX());
   }
 
   // Called once the command ends or is interrupted.

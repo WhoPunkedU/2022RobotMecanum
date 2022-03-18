@@ -13,6 +13,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterCommand extends CommandBase {
   private DriveSubsystem driveSubsystem;
   private ShooterSubsystem shooterSubsystem;
+
   /** Creates a new ShooterCommand. */
   public ShooterCommand(DriveSubsystem m_driveSubsystem, ShooterSubsystem m_shooterSubsystem) {
     driveSubsystem = m_driveSubsystem;

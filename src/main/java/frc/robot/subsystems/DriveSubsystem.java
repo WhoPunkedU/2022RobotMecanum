@@ -18,23 +18,27 @@ import frc.robot.Constants;
 public class DriveSubsystem extends SubsystemBase {
 
   private WPI_TalonFX motorFL = new WPI_TalonFX(Constants.motorFL),
-                      motorBL = new WPI_TalonFX(Constants.motorBL),
-                      motorFR = new WPI_TalonFX(Constants.motorFR),
-                      motorBR = new WPI_TalonFX(Constants.motorBR);
+      motorBL = new WPI_TalonFX(Constants.motorBL),
+      motorFR = new WPI_TalonFX(Constants.motorFR),
+      motorBR = new WPI_TalonFX(Constants.motorBR);
 
-  //private MotorControllerGroup leftMotors = new MotorControllerGroup(motorFL, motorBL),
-  //                             rightMotors = new MotorControllerGroup(motorFR, motorBR);
+  // private MotorControllerGroup leftMotors = new MotorControllerGroup(motorFL,
+  // motorBL),
+  // rightMotors = new MotorControllerGroup(motorFR, motorBR);
 
-  //private PIDController leftController = new PIDController(Constants.driveP, Constants.driveI, Constants.driveD),
-  //                      rightController = new PIDController(Constants.driveP, Constants.driveI, Constants.driveD);
-  
-  //private DifferentialDrive differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
-  
+  // private PIDController leftController = new PIDController(Constants.driveP,
+  // Constants.driveI, Constants.driveD),
+  // rightController = new PIDController(Constants.driveP, Constants.driveI,
+  // Constants.driveD);
+
+  // private DifferentialDrive differentialDrive = new
+  // DifferentialDrive(leftMotors, rightMotors);
+
   private AHRS gyro = new AHRS(Port.kMXP);
   private int a = Constants.driveScalingCoefficient;
   private SlewRateLimiter xLimiter = new SlewRateLimiter(Constants.xRateLimit),
-                          yLimiter = new SlewRateLimiter(Constants.yRateLimit),
-                          zLimiter = new SlewRateLimiter(Constants.zRateLimit);
+      yLimiter = new SlewRateLimiter(Constants.yRateLimit),
+      zLimiter = new SlewRateLimiter(Constants.zRateLimit);
 
   public void driveInit() {
     motorFL.setInverted(TalonFXInvertType.Clockwise);
@@ -90,21 +94,21 @@ public class DriveSubsystem extends SubsystemBase {
     y = yLimiter.calculate(y);
     z = zLimiter.calculate(z);
 
-    x = (a*(Math.pow(x, 3)) + (1-a)*x);
-    y = -(a*(Math.pow(y, 3)) + (1-a)*y);
-    z = -(a*(Math.pow(z, 3)) + (1-a)*z);
+    x = (a * (Math.pow(x, 3)) + (1 - a) * x);
+    y = -(a * (Math.pow(y, 3)) + (1 - a) * y);
+    z = -(a * (Math.pow(z, 3)) + (1 - a) * z);
 
-    FL = x+y+z;
-    BL = x-y+z;
-    FR = x-y-z;
-    BR = x+y-z;
+    FL = x + y + z;
+    BL = x - y + z;
+    FR = x - y - z;
+    BR = x + y - z;
 
     optimize = Math.max(Math.max(Math.max(Math.max(FL, BL), FR), BR), 1.00);
 
-    FL = (FL/optimize)*Constants.maxDriveSpeed;
-    BL = (BL/optimize)*Constants.maxDriveSpeed;
-    FR = (FR/optimize)*Constants.maxDriveSpeed;
-    BR = (BR/optimize)*Constants.maxDriveSpeed;
+    FL = (FL / optimize) * Constants.maxDriveSpeed;
+    BL = (BL / optimize) * Constants.maxDriveSpeed;
+    FR = (FR / optimize) * Constants.maxDriveSpeed;
+    BR = (BR / optimize) * Constants.maxDriveSpeed;
 
     mecanumDrive(FL, BL, FR, BR);
   }

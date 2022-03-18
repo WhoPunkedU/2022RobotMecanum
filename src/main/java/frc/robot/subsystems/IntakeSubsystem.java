@@ -14,9 +14,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
-  
+
   private TalonSRX motor = new TalonSRX(Constants.motorINT);
-  private DoubleSolenoid solenoid = new DoubleSolenoid(Constants.pneumaticHub, PneumaticsModuleType.REVPH, Constants.solenoidIntakeForward, Constants.solenoidIntakeReverse);
+  private DoubleSolenoid solenoid = new DoubleSolenoid(Constants.pneumaticHub, PneumaticsModuleType.REVPH,
+      Constants.solenoidIntakeForward, Constants.solenoidIntakeReverse);
 
   public void intakeInit() {
     motor.setInverted(false);
